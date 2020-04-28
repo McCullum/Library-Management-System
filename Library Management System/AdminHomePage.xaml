@@ -1,0 +1,1406 @@
+﻿<Window x:Class="Library_Management_System.AdminHomePage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library_Management_System"
+        xmlns:local1="clr-namespace:Library_Management_System.Validations"
+        xmlns:local2="clr-namespace:Library_Management_System.Models"
+        mc:Ignorable="d"
+        Icon="E:\Conestoga\Semester 13 Jan 2020 - 24 May 2020\High Quality Software Programming\Project\Library Management System\Library Management System\Library Management System\Images\Ico2.ico"
+        Height="600" Width="900" Background="AliceBlue" SizeChanged="Window_SizeChanged">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <local2:Users x:Key="UserResource"></local2:Users>
+            <local2:Fines x:Key="FineResource"></local2:Fines>
+            <SolidColorBrush x:Key="MidNightBlueColor" >#293541</SolidColorBrush>
+            <local1:RowConverterForPendingIssuedBook x:Key="RowConverterForPedingBooks"></local1:RowConverterForPendingIssuedBook>
+            <local1:RowConverterForReturnedBook x:Key="ReturnedBookConverter"></local1:RowConverterForReturnedBook>
+            <local1:ValidationRuleForCurrentPasswordInChangePassword x:Key="ChangePasswordRule"></local1:ValidationRuleForCurrentPasswordInChangePassword>
+            <local1:RowConverterForRemainingFine x:Key="RemainingFineAmountConverter"></local1:RowConverterForRemainingFine>
+            <local1:ValidationRuleForAcceptingFine x:Key="AcceptFineRule"></local1:ValidationRuleForAcceptingFine>
+            
+        </Grid.Resources>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Background="{StaticResource MidNightBlueColor}">
+            
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="0" >
+            <Label Content="Welcome," VerticalAlignment="Top" Foreground="AliceBlue" HorizontalAlignment="Left"></Label>
+            <Label x:Name="CurrentUserEmail" VerticalAlignment="Center" Foreground="AliceBlue" HorizontalAlignment="Left"></Label>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" >
+            <Button Content="Issue Book" x:Name="btnManageIssueBooks" Foreground="AliceBlue" 
+                    FontSize="15" 
+                    Background="Transparent" BorderBrush="{StaticResource MidNightBlueColor}" MouseEnter="btnManageIssueBooks_MouseEnter" MouseLeave="btnManageIssueBooks_MouseLeave" Click="btnManageIssueBooks_Click" 
+                   ></Button>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="0" >
+            <Button Content="Book" x:Name="btnManageBooks" Foreground="AliceBlue" 
+                    FontSize="15" 
+                    Background="Transparent" BorderBrush="{StaticResource MidNightBlueColor}" MouseEnter="btnManageBooks_MouseEnter" MouseLeave="btnManageBooks_MouseLeave" Click="btnManageBooks_Click"  
+                   ></Button>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="0" >
+            <Button Content="Users" x:Name="btnManageUsers" Foreground="AliceBlue" 
+                    FontSize="15" 
+                    Background="Transparent" BorderBrush="{StaticResource MidNightBlueColor}" MouseEnter="btnManageUsers_MouseEnter" MouseLeave="btnManageUsers_MouseLeave" Click="btnManageUsers_Click" 
+                   ></Button>
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="0" >
+            <Button Content="Fines" x:Name="btnManageFines" Foreground="AliceBlue" 
+                    FontSize="15" 
+                    Background="Transparent" BorderBrush="{StaticResource MidNightBlueColor}" MouseEnter="btnManageFines_MouseEnter" MouseLeave="btnManageFines_MouseLeave" Click="btnManageFines_Click"  
+                   ></Button>
+        </Grid>
+        <Grid Grid.Row="5" Grid.Column="0" >
+            <Button Content="Setting" x:Name="btnSetting" Foreground="AliceBlue" 
+                    FontSize="15" 
+                    Background="Transparent" BorderBrush="{StaticResource MidNightBlueColor}" MouseEnter="btnSetting_MouseEnter" MouseLeave="btnSetting_MouseLeave" Click="btnSetting_Click"  
+                   ></Button>
+        </Grid>
+        <Grid Grid.Row="6" Grid.Column="0">
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1" Background="Silver" Grid.ColumnSpan="8">
+            <Label Content="Library Management System" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" FontWeight="Bold" FontSize="30"></Label>
+            <Button x:Name="btnLogOut" Content="Logout" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnLogOut_Click"></Button>
+        </Grid>
+
+
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="8" Grid.RowSpan="5">
+            <TabControl x:Name="ManageBooksTabControl" Visibility="Hidden"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Height="400" Width="600"
+                        >
+                <TabItem Header="View Books">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvViewBooks" IsReadOnly="True" 
+                                      ItemsSource="{Binding Path=BooksList}"
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="400" Height="250" MinHeight="250" MinWidth="400"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Book Id" Width="2*" Binding="{Binding Path=BookId}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book Title" Width="3*" Binding="{Binding Path=BookTitle}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book Type" Width="3*" Binding="{Binding Path=BookType}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Author" Width="3*" Binding="{Binding Path=Author}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Quantuty" Width="2*" Binding="{Binding Path=Quantity}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Quantity On Hand" Width="2*" Binding="{Binding Path=QuantityOnHand}" ></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6">
+                            <TextBox x:Name="txtSearchBook" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Width="210" MinWidth="100" Text="Book Title, Book Author, Book Type"
+                                     Foreground="DarkGray" TextChanged="txtSearchBook_TextChanged" LostFocus="txtSearchBook_LostFocus" GotFocus="txtSearchBook_GotFocus"
+                                     ></TextBox>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Add New Book">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblAddBookHEader" Content="Add New Book" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddBookTitle" Content="Enter Book Title"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddBookType" Content="Select Book Type"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddBookAuthor" Content="Enter Name Of Author"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddBookQuantity" Content="Book Quantity"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtAddBookTitle" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Book Title" Width="100" MinWidth="120" Foreground="DarkGray" GotFocus="txtAddBookTitle_GotFocus" LostFocus="txtAddBookTitle_LostFocus"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
+                            <ComboBox x:Name="txtAddBookType" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="120" MinWidth="100" SelectionChanged="txtAddBookType_SelectionChanged">
+                                <ComboBoxItem IsSelected="True" Content="Fiction Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Science Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Drama Book"></ComboBoxItem>
+                                <ComboBoxItem Content="History Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Biography Book"></ComboBoxItem>
+                            </ComboBox>
+
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtAddBookAuthor" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="100" MinWidth="120" Foreground="DarkGray" GotFocus="txtAddBookAuthor_GotFocus" LostFocus="txtAddBookAuthor_LostFocus"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtAddBookQuantity" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="0" Width="100" MinWidth="120" Foreground="DarkGray" GotFocus="txtAddBookQuantity_GotFocus" LostFocus="txtAddBookQuantity_LostFocus"
+                                     ></TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2">
+                            <Button x:Name="btnAddBook" Content="Add" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnAddBook_Click"
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Update Book Info">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblUpdateBookHeader" Content="Update Book Info" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lbl" Content="Select Book Id"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+                            <ComboBox x:Name="txtUpdateBookId" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                      Width="100" MinWidth="120"
+                                      >
+                            </ComboBox>
+                        </Grid>
+
+                        <Grid Grid.Column="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,53,0,0" Grid.RowSpan="2" Width="198">
+                            <Button x:Name="btnFetchBookData" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Content="Fetch" Width="100" MinWidth="120" Click="btnFetchBookData_Click">
+                            </Button>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblUpdateBookTitle" Content="Book Title"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblUpdateBookType" Content="Book Type"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblUpdateBookAuthor" Content="Name Of Author"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblUpdateBookQuantity" Content="Book Quantity"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtUpdateBookTitle" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Book Title" Width="100" MinWidth="120" GotFocus="txtAddBookTitle_GotFocus" LostFocus="txtAddBookTitle_LostFocus"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2">
+                            <ComboBox x:Name="txtUpdateBookType" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="120" MinWidth="100" SelectionChanged="txtAddBookType_SelectionChanged">
+                                <ComboBoxItem Content="Fiction Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Science Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Drama Book"></ComboBoxItem>
+                                <ComboBoxItem Content="History Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Biography Book"></ComboBoxItem>
+                            </ComboBox>
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtUpdateBookAuthor" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="100" MinWidth="120" GotFocus="txtAddBookAuthor_GotFocus" LostFocus="txtAddBookAuthor_LostFocus"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtUpdateBookQuantity" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="0" Width="100" MinWidth="120"
+                                     ></TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2">
+                            <Button x:Name="btnUpdateBook" Content="Update" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnUpdateBook_Click"
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Delete Book Info">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblDeleteBookHeader" Content="Delete Book Info" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblDelete" Content="Select Book Id"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+                            <ComboBox x:Name="txtDeleteBookId" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                      Width="100" MinWidth="120"
+                                      >
+                            </ComboBox>
+                        </Grid>
+
+                        <Grid Grid.Column="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,53,0,0" Grid.RowSpan="2" Width="198">
+                            <Button x:Name="btnFetchBookDataForDelete" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Content="Fetch" Width="100" MinWidth="120" Click="btnFetchBookDataForDelete_Click" >
+                            </Button>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblDeleteBookTitle" Content="Book Title"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblDeleteBookType" Content="Book Type"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblDeleteBookAuthor" Content="Name Of Author"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblDeleteBookQuantity" Content="Book Quantity"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtDeleteBookTitle" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Book Title" Width="100" MinWidth="120" GotFocus="txtAddBookTitle_GotFocus" LostFocus="txtAddBookTitle_LostFocus"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2">
+                            <ComboBox x:Name="txtDeleteBookType" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="120" MinWidth="100" SelectionChanged="txtAddBookType_SelectionChanged">
+                                <ComboBoxItem Content="Fiction Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Science Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Drama Book"></ComboBoxItem>
+                                <ComboBoxItem Content="History Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Biography Book"></ComboBoxItem>
+                            </ComboBox>
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtDeleteBookAuthor" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="100" MinWidth="120" GotFocus="txtAddBookAuthor_GotFocus" LostFocus="txtAddBookAuthor_LostFocus"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtDeleteBookQuantity" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="0" Width="100" MinWidth="120"
+                                     ></TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2">
+                            <Button x:Name="btnDeleteBook" Content="Delete Book" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnDeleteBook_Click"
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <TabControl x:Name="ManageIssueBooksTabControl"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Height="400" Width="600"
+                        >
+                <TabItem Header="Issue Book">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblIssueBookHeader" Content="Issue Book" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" >
+                            <Label x:Name="lblIssueBookId" Content="Book Id Or Title"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="2" >
+                            <TextBox x:Name="txtIssueBookIdOrTitle" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                     Width="80" MinWidth="80" TextChanged="txtIssueBookIdOrTitle_TextChanged" 
+                                      >
+                            </TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="0" >
+                            <Label x:Name="lblIssueBookTitle" Content="Book Title"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" >
+                            <Label x:Name="lblIssueBookType" Content="Book Type"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" >
+                            <Label x:Name="lblIssueBookAuthor" Content="Name Of Author"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0" >
+                            <Label x:Name="lblIssueBookQuantityOnHand" Content="Available Book"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="2" >
+                            <TextBox x:Name="txtIssueBookTitle" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Book Title" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="2" >
+                            <ComboBox x:Name="txtIssueBookType" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="80" MinWidth="80" IsEnabled="False" >
+                                <ComboBoxItem Content="Fiction Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Science Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Drama Book"></ComboBoxItem>
+                                <ComboBoxItem Content="History Book"></ComboBoxItem>
+                                <ComboBoxItem Content="Biography Book"></ComboBoxItem>
+                            </ComboBox>
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="2" >
+                            <TextBox x:Name="txtIssueBookAuthor" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="2" >
+                            <TextBox x:Name="txtIssueBookQuantityOnHands" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="0" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvIssueBookData" IsReadOnly="True" 
+                                      ItemsSource="{Binding Path=IssueBookDataList}"
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="250" Height="200" MinHeight="250" MinWidth="200"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Book Id" Width="2*" Binding="{Binding Path=BookId}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book Title" Width="3*" Binding="{Binding Path=BookTitle}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Author" Width="3*" Binding="{Binding Path=Author}" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Quantity On Hand" Width="2*" Binding="{Binding Path=QuantityOnHand}" ></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+                        <Grid Grid.Row="6" Grid.Column="0">
+                            <Label x:Name="lblUserIdForIssueBook" Content="Enter User Id"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="6" Grid.Column="2">
+                            <TextBox x:Name="txtUserIdForIssueBook" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Foreground="DarkGray" Width="80" MinWidth="80" IsEnabled="False" 
+                                     GotFocus="txtUserIdForIssueBook_GotFocus" LostFocus="txtUserIdForIssueBook_LostFocus" PreviewTextInput="txtUserIdForIssueBook_PreviewTextInput"
+                                     ToolTip="{Binding ElementName=txtUserIdForIssueBook, Path=(Validation.Errors)[0].ErrorContent}"
+                                     DataContext="{StaticResource UserResource}"
+                                     >
+                                <TextBox.Text>
+                                    <Binding Path="UserId">
+                                        <Binding.ValidationRules>
+                                            <local1:UserIdExistsOrNotValidation></local1:UserIdExistsOrNotValidation>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+
+                    <Grid Grid.Row="6" Grid.Column="3" >
+                            <Button x:Name="btnIssueBook" IsEnabled="False" Content="Issue Book" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnIssueBook_Click" 
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Return Book">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblReturnBookHeader" Content="Return Book" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" >
+                            <Label x:Name="lblReturnIssueId" Content="Issue Id"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="2" >
+                            <TextBox x:Name="txtReturnBookIdOrTitle" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                     Width="80" MinWidth="80" TextChanged="txtReturnBookIdOrTitle_TextChanged" PreviewTextInput="txtReturnBookIdOrTitle_PreviewTextInput" 
+                                      >
+                            </TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="0" >
+                            <Label x:Name="lblReturnBookTitle" Content="Book Title"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" >
+                            <Label x:Name="lblIssuedBy" Content="Issued By"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" >
+                            <Label x:Name="lblIssuedOn" Content="Issued Date"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0" >
+                            <Label x:Name="lblIsFined" Content="Fined"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="2" >
+                            <TextBox x:Name="txtReturnBookTitle" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Book Title" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="2" >
+                            <TextBox x:Name="txtIssuedBy" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Issued By" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="2" >
+                            <TextBox x:Name="txtIssuedOn" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Issued Date" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="2" >
+                            <TextBox x:Name="txtFine" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="0" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvReturnBookData" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="250" Height="200" MinHeight="250" MinWidth="200"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Issue Id" Binding="{Binding IssueId}" Width="*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book" Binding="{Binding BookTitle}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issued By" Binding="{Binding Name}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issued On" Binding="{Binding IssueDate}" Width="2*" MaxWidth="65"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+                        <Grid Grid.Row="6" Grid.Column="2" >
+                            <Button x:Name="btnReturnBook" IsEnabled="False" Content="Return Book" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnReturnBook_Click" 
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="View Pending Book">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvViewPendingBooks" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="400" Height="250" MinHeight="250" MinWidth="400"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Issue Id" Binding="{Binding IssueId}" Width="*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book" Binding="{Binding BookTitle}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issued By" Binding="{Binding Name}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issued On" Binding="{Binding IssueDate}" Width="2*" MaxWidth="65"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="{Binding IssueDate, Converter={StaticResource RowConverterForPedingBooks}}"></Setter>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6">
+                            <TextBox x:Name="txtSearchPendingBook" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Width="210" MinWidth="100" Text="Issue Id, User Name, Book Name"
+                                     Foreground="DarkGray" TextChanged="txtSearchPendingBook_TextChanged" LostFocus="txtSearchPendingBook_LostFocus" GotFocus="txtSearchPendingBook_GotFocus"
+                                     ></TextBox>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="View All Issued Book">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvViewAllIssuedBooks" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="400" Height="250" MinHeight="250" MinWidth="400"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Issue Id" Binding="{Binding IssueId}" Width="*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book" Binding="{Binding BookTitle}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issued By" Binding="{Binding Name}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issued On" Binding="{Binding IssueDate}" Width="2*" MaxWidth="65"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Returned On" Binding="{Binding ReturnDate}" Width="2*" MaxWidth="65"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="{Binding ReturnDate, Converter={StaticResource ReturnedBookConverter}}"></Setter>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6">
+                            <TextBox x:Name="txtSearchAllIssuedBook" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Width="210" MinWidth="100" Text="Issue Id, User Name, Book Name"
+                                     Foreground="DarkGray" TextChanged="txtSearchAllIssuedBook_TextChanged" LostFocus="txtSearchAllIssuedBook_LostFocus" GotFocus="txtSearchAllIssuedBook_GotFocus"
+                                     ></TextBox>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <TabControl x:Name="ManageUsersTabControl"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Height="400" Width="600" Visibility="Hidden"
+                        >
+                <TabItem Header="Add User">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblAddUserHeader" Content="Add New User" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddUserFirstName" Content="First Name"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddLastName" Content="Last Name"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddUserEmail" Content="User Email Id"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddUserContact" Content="Contact Number"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblAddUserType" Content="Select User Type"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtAddUserFirstName" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="First Name" Width="100" MinWidth="120" Foreground="DarkGray" GotFocus="txtAddUserFirstName_GotFocus" LostFocus="txtAddUserFirstName_LostFocus"
+                                     >
+                            </TextBox>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtAddUserLastName" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Last Name" Width="100" MinWidth="120" Foreground="DarkGray" GotFocus="txtAddUserLastName_GotFocus" LostFocus="txtAddUserLastName_LostFocus"
+                                     >
+                            </TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtAddUserEmail" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Email Id" Width="100" MinWidth="120" Foreground="DarkGray" GotFocus="txtAddUserEmail_GotFocus" LostFocus="txtAddUserEmail_LostFocus"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtAddUserContact" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Contact Number" Width="100" MinWidth="120" Foreground="DarkGray" GotFocus="txtAddUserContact_GotFocus" LostFocus="txtAddUserContact_LostFocus" PreviewTextInput="txtAddUserContact_PreviewTextInput" 
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2">
+                            <ComboBox x:Name="txtAddUserType" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Author Name" Width="120" MinWidth="100">
+                                <ComboBoxItem IsSelected="True" Content="Student"></ComboBoxItem>
+                                <ComboBoxItem Content="Faculty"></ComboBoxItem>
+                                <ComboBoxItem Content="Librarian"></ComboBoxItem>
+                                <ComboBoxItem Content="Admin"></ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2">
+                            <Button x:Name="btnAddUser" Content="Add" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnAddUser_Click"
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Delete User">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblDeleteUserHeader" Content="Delete User" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" >
+                            <Label x:Name="lblDeleteUserId" Content="User Id"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="2" >
+                            <TextBox x:Name="txtDeleteUserId" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                     Width="80" MinWidth="80" TextChanged="txtDeleteUserId_TextChanged"  
+                                      >
+                            </TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="0" >
+                            <Label x:Name="lblDeleteUserFirstName" Content="First Name"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" >
+                            <Label x:Name="lblDeleteUserLastName" Content="Last Name"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" >
+                            <Label x:Name="lblDeleteUserEmailId" Content="Email Id"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0" >
+                            <Label x:Name="lblDeleteUserEmail" Content="Contact Number"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" >
+                            <Label x:Name="lblDeleteUserType" Content="User Type"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="2" >
+                            <TextBox x:Name="txtDeleteUserFirstName" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="First Name" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="2" >
+                            <TextBox x:Name="txtDeleteUserLastName" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Last Name" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="2" >
+                            <TextBox x:Name="txtDeleteUserEmailId" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Email Id" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="2" >
+                            <TextBox x:Name="txtDeleteUserContactNumber" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="0000000000" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="2" >
+                            <ComboBox x:Name="txtDeleteUserType" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Width="80" MinWidth="80">
+                                <ComboBoxItem IsSelected="True" Content="Student"></ComboBoxItem>
+                                <ComboBoxItem Content="Faculty"></ComboBoxItem>
+                                <ComboBoxItem Content="Librarian"></ComboBoxItem>
+                                <ComboBoxItem Content="Admin"></ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+
+
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvActiveUsersData" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="250" Height="200" MinHeight="250" MinWidth="200"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id" Binding="{Binding UserId}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Email Id" Binding="{Binding EmailId}" Width="3*" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="ContactNumber" Binding="{Binding ContactNumber}" Width="3*"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+                        <Grid Grid.Row="7" Grid.Column="2" >
+                            <Button x:Name="btnDeleteUser" IsEnabled="False" Content="Delete User" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnDeleteUser_Click" 
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="View Active User">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvViewAllActiveUser" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="400" Height="250" MinHeight="250" MinWidth="400"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id" Binding="{Binding UserId}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Email Id" Binding="{Binding EmailId}" Width="3*" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="ContactNumber" Binding="{Binding ContactNumber}" Width="3*"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6">
+                            <TextBox x:Name="txtSearchAllActiveUser" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Width="210" MinWidth="100" Text="User Name, User Email, Contact Number"
+                                     Foreground="DarkGray" TextChanged="txtSearchAllActiveUser_TextChanged" LostFocus="txtSearchAllActiveUser_LostFocus" GotFocus="txtSearchAllActiveUser_GotFocus"
+                                     ></TextBox>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="View Deleted User">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvViewAllDeletedUser" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="400" Height="250" MinHeight="250" MinWidth="400"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id" Binding="{Binding UserId}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Email Id" Binding="{Binding EmailId}" Width="3*" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="ContactNumber" Binding="{Binding ContactNumber}" Width="3*"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6">
+                            <TextBox x:Name="txtSearchAllDeletedUser" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Width="210" MinWidth="100" Text="User Name, User Email, Contact Number"
+                                     Foreground="DarkGray" TextChanged="txtSearchAllDeletedUser_TextChanged" LostFocus="txtSearchAllDeletedUser_LostFocus" GotFocus="txtSearchAllDeletedUser_GotFocus"
+                                     ></TextBox>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <TabControl x:Name="ManageSettingTabControl" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Height="400" Width="600" Visibility="Hidden">
+                <TabItem Header="Change Password">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblChangePasswordHeader" Content="Change Password" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblCurrentPassword" Content="Enter Current Password"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblNewPassword" Content="Enter New Password"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label x:Name="lblReEnerPass" Content="Re-enter New Password"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+
+
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+                            <PasswordBox x:Name="txtOldPassword" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                      Width="100" MinWidth="120" Foreground="DarkGray"
+                                     >
+                            </PasswordBox>
+                        </Grid>
+
+                        <!--<Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+                            <TextBox x:Name="txtOldPassword" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                      Width="100" MinWidth="120" Foreground="DarkGray" 
+                                         ToolTip="{Binding ElementName=txtOldPassword, Path=(Validation.Errors)[0].ErrorContent}"
+                                     DataContext="{StaticResource UserResource}"
+                                     >
+                                <TextBox.Text>
+                                    <Binding Path="Password">
+                                        <Binding.ValidationRules>
+                                            <local1:ValidationRuleForCurrentPasswordInChangePassword UserID="1"></local1:ValidationRuleForCurrentPasswordInChangePassword>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>-->
+
+
+                        <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2">
+                            <PasswordBox x:Name="txtNewPassword1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Width="100" MinWidth="120" Foreground="DarkGray"  PasswordChanged="txtNewPassword1_PasswordChanged"
+                                     ></PasswordBox>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2">
+                            <PasswordBox x:Name="txtNewPassword2" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                      Width="140" MinWidth="140" Foreground="DarkGray"  PasswordChanged="txtNewPassword2_PasswordChanged"
+                                     ></PasswordBox>
+                        </Grid>
+
+                        <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
+                            <Button x:Name="btnChangePassword" Content="Change Password" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="False" Click="btnChangePassword_Click"
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+    
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <TabControl x:Name="ManageFineTabControl" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
+                <TabItem Header="Accept Fine">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Label x:Name="lblAcceptFine" Content="Accept Fine" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="12" FontWeight="Bold"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" >
+                            <Label x:Name="lblAcceptFineSearch" Content="Issue Id"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="2" >
+                            <TextBox x:Name="txtAcceptFineSearch" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                     Width="80" MinWidth="80" TextChanged="txtAcceptFineSearch_TextChanged"
+                                      >
+                            </TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="0" >
+                            <Label x:Name="lblAcceptFineBookTitle" Content="Book Title"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" >
+                            <Label x:Name="lblAcceptFineIssueBy" Content="Issued By"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" >
+                            <Label x:Name="lblAcceptFineTotalFine" Content="Total Fine"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0" >
+                            <Label x:Name="lblAcceptFineRemainingFine" Content="Remaining Fine"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" >
+                            <Label x:Name="lblAcceptFineFineAmount" Content="Paying Now"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   ></Label>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Grid.Column="2" >
+                            <TextBox x:Name="txtAcceptFineBookTitle" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Book Title" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="2" >
+                            <TextBox x:Name="txtAcceptFineIssuedBy" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="Issued By" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="2" >
+                            <TextBox x:Name="txtAcceptFineTotalFine" MinWidth="80" IsEnabled="False" Text="0" Foreground="DarkGray" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="2" >
+                            <TextBox x:Name="txtAcceptFineRemainingFine" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                     Text="0" Width="80" MinWidth="80" IsEnabled="False"
+                                     ></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="2" >
+                            <TextBox x:Name="txtFineAmountToPay" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                      Width="80" MinWidth="80" IsEnabled="False" Foreground="DarkGray" GotFocus="txtFineAmountToPay_GotFocus" LostFocus="txtFineAmountToPay_LostFocus"
+                                     ToolTip="{Binding ElementName=txtFineAmountToPay, Path=(Validation.Errors)[0].ErrorContent}"
+                                     DataContext="{StaticResource FineResource}"
+                                     >
+                                <!--<TextBox.Text>
+                                    <Binding Path="IssueId" NotifyOnValidationError="True">
+                                        <Binding.ValidationRules>
+                                            <local1:ValidationRuleForAcceptingFine IsseId="{Binding IssuedIdForBinding}"></local1:ValidationRuleForAcceptingFine>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>-->
+                            </TextBox>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="6">
+                            <DataGrid
+                                x:Name="dgvAcceptFineRemainingFine" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="250" Height="200" MinHeight="250" MinWidth="200"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Issue Id" Binding="{Binding IssueId}" Width="*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book" Binding="{Binding BookTitle}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issued By" Binding="{Binding Name}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Remaing Amount" Binding="{Binding RemainingFineAmount}" Width="2*" MaxWidth="65"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+                        <Grid Grid.Row="7" Grid.Column="2" >
+                            <Button x:Name="btnAcceptFine" IsEnabled="False" Content="Accept Fine" Width="92"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnAcceptFine_Click" 
+                                    >
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="View All Fine">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvAllFines" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="400" Height="250" MinHeight="250" MinWidth="400"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Issue Id" Binding="{Binding IssueId}" Width="*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Email Id" Binding="{Binding EmailId}" Width="3*" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book Title" Binding="{Binding BookTitle}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issue Date" Binding="{Binding IssueDate}" Width="3*" MaxWidth="60"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Fine Amount" Binding="{Binding FineAmount}" Width="3*" MaxWidth="20" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Remaining Fine Amount" Binding="{Binding RemainingFineAmount}" Width="3*" MaxWidth="20" ></DataGridTextColumn>
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="{Binding RemainingFineAmount, Converter={StaticResource RemainingFineAmountConverter}}"></Setter>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6">
+                            <TextBox x:Name="txtSearchAllFines" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Width="210" MinWidth="100" Text="User Name, Book Title, Email Id, Issue Id"
+                                     Foreground="DarkGray" TextChanged="txtSearchAllFines_TextChanged" LostFocus="txtSearchAllFines_LostFocus" GotFocus="txtSearchAllFines_GotFocus"
+                                     ></TextBox>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="View Remaining Fine">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="5">
+                            <DataGrid
+                                x:Name="dgvRemainingFine" IsReadOnly="True" 
+                                AutoGenerateColumns="False"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="400" Height="250" MinHeight="250" MinWidth="400"
+                                      >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Issue Id" Binding="{Binding IssueId}" Width="*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Email Id" Binding="{Binding EmailId}" Width="3*" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Book Title" Binding="{Binding BookTitle}" Width="3*"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Issue Date" Binding="{Binding IssueDate}" Width="3*" MaxWidth="60"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Fine Amount" Binding="{Binding FineAmount}" Width="3*" MaxWidth="20" ></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Remaining Fine Amount" Binding="{Binding RemainingFineAmount}" Width="3*" MaxWidth="20" ></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6">
+                            <TextBox x:Name="txtSearchRemainingFines" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Width="210" MinWidth="100" Text="User Name, Book Title, Email Id, Issue Id"
+                                     Foreground="DarkGray" TextChanged="txtSearchRemainingFines_TextChanged" 
+									 LostFocus="txtSearchRemainingFines_LostFocus" GotFocus="txtSearchRemainingFines_GotFocus"
+                                     ></TextBox>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        
+        
+    </Grid>
+</Window>

@@ -1,0 +1,79 @@
+﻿<Window x:Class="Library_Management_System.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library_Management_System"
+        mc:Ignorable="d" Background="AliceBlue"
+        Title="Login - Library Management System" Height="400" Width="500" 
+        Icon="E:\Conestoga\Semester 13 Jan 2020 - 24 May 2020\High Quality Software Programming\Project\Library Management System\Library Management System\Library Management System\Images\Ico2.ico"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="FontWeight" Value="Bold"></Setter>
+            </Style>
+        </Grid.Resources>
+        <!-- Username Label -->
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" >
+            <Label x:Name="lblUsername" Content="Enter Username" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        </Grid>
+
+        <!-- Username Textbox -->
+        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" >
+            <TextBox x:Name="txtUsername" Text="Email Or Contact No." 
+                   HorizontalAlignment="Center" Width="150" 
+                     Foreground="DarkGray"
+                     VerticalAlignment="Center" GotFocus="txtUName_GotFocus" LostFocus="txtUName_LostFocus"></TextBox>
+        
+        </Grid>
+
+        <!-- Password Label -->
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" >
+            <Label x:Name="lblPassword" Content="Enter Password" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        </Grid>
+
+        <!-- Password Textbox -->
+        <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" >
+            <PasswordBox x:Name="txtPassword" 
+                   HorizontalAlignment="Center" Width="150" 
+                     VerticalAlignment="Center" ></PasswordBox>
+        </Grid>
+
+        <!-- Invalid Label -->
+        <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" >
+            <Label x:Name="lblInvalid" Visibility="Hidden"
+                Content="Invalid Username Or Password!" Foreground="Red"
+                   VerticalAlignment="Top" HorizontalAlignment="Center"
+                   ></Label>
+        </Grid>
+
+        <!-- Login Button -->
+        <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" >
+            <Button x:Name="btnLogin" Width="80" 
+                Content="Login" 
+                   VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="btnLogin_Click"
+                   ></Button>
+        </Grid>
+
+
+    </Grid>
+</Window>
